@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: rwideman/gs-spring-boot-docker:1.0
+      - image: rwideman/gs-spring-boot-docker:latest
     steps:
       - checkout
 workflows:
