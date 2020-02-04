@@ -5,6 +5,8 @@ jobs:
       - image: rwideman/gs-spring-boot-docker:latest
     steps:
       - checkout
+      - run: docker build --build-arg DEPENDENCY=build/dependency -t rwideman/gs-spring-boot-docker .
+      #- run: ./gradlew jibDockerBuild --image=rwideman/gs-spring-boot-docker
 workflows:
   version: 2
   build_and_test:
