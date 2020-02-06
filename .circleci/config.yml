@@ -1,31 +1,15 @@
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
-      - image: openjdk:8-jdk-alpine # build container
-    working_directory: ~/gs-spring-boot-docker
+      - image: openjdk:8u242-jdk
     steps:
       - checkout
-      - run:
-          name: Install gradle and docker
-          command: |
-            apk update
-            apk add gradle docker
-      - run:
-          name: Build jar
-          command: |
-            ./gradlew build
-      - run:
-          name: Build container
-          command: |
-            docker build --build-arg DEPENDENCY=build/dependency -t rwideman/gs-spring-boot-docker .
-      - run:
-          name: Build and tag
-          command: |
-            ./gradlew jib --image=rwideman/gs-spring-boot-docker
 
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - build
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+      - run: |
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+          ./gradlew jib --image=rwideman/gs-spring-boot-docker:$TAG
