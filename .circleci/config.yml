@@ -5,10 +5,7 @@ jobs:
       - image: openjdk:8u242-jdk
     steps:
       - checkout
-
       - setup_remote_docker:
-          docker_layer_caching: true
-
       - run: |
           TAG=0.1.$CIRCLE_BUILD_NUM
           echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
