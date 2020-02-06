@@ -3,7 +3,6 @@ jobs:
   build:
     docker:
       - image: openjdk:8-jdk-alpine # build container
-      - image: #do i list a container here as i will be building this one
     working_directory: ~/gs-spring-boot-docker
     steps:
       - checkout
